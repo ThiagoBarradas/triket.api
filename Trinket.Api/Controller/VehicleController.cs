@@ -8,7 +8,7 @@ namespace Triket.Api.Controller
     {
         public VehicleController()
         {
-            this.Post("vehicles", args => this.Create());
+            this.Post("vehicles", args => this.CreateOrUpdate());
             this.Get("vehicles", args => this.Search());
         }
 
@@ -17,7 +17,7 @@ namespace Triket.Api.Controller
             return Response.AsJson("");
         }
 
-        public object Create()
+        public object CreateOrUpdate()
         {
             var request = this.Bind<Vehicle>();
             var response = new { vehicle = request };
