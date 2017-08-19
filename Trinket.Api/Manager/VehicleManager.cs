@@ -1,8 +1,5 @@
 ﻿using Nancy;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Trinket.Api.Models;
 using Trinket.Api.Utilities;
 
@@ -10,11 +7,11 @@ namespace Trinket.Api.Manager
 {
     public class VehicleManager : BaseManager
     {
-        public BaseResponse<object> CreateOrUpdateVehicle(Vehicle vehicle)
+        public BaseResponse<object> CreateOrUpdateVehicle(Vehicle request)
         {
             BaseResponse<object> response = new BaseResponse<object>();
 
-            var vehicleDetails = this.VehicleExternal.GetVehicleDetails(vehicle.LicensePlate);
+            var vehicleDetails = this.VehicleExternal.GetVehicleDetails(request.LicensePlate);
 
             if (vehicleDetails == null || string.IsNullOrWhiteSpace(vehicleDetails.LicensePlate))
             {
@@ -23,46 +20,53 @@ namespace Trinket.Api.Manager
                 return response;
             }
 
-            vehicle.YearModel = vehicleDetails.Brand;
-            vehicle.City = vehicleDetails.City;
-            vehicle.Color = vehicleDetails.Color;
-            vehicle.LicensePlate = LicensePlateUtility.NormalizeLicensePlate(vehicleDetails.LicensePlate);
-            vehicle.Model = vehicleDetails.Model;
-            vehicle.Situation = vehicleDetails.Situation;
-            vehicle.State = vehicleDetails.State;
-            vehicle.Year = vehicleDetails.Year;
-            vehicle.YearModel = vehicleDetails.YearModel;
-            vehicle.OwnerId = vehicle.Owner.Id;
+            request.YearModel = vehicleDetails.Brand;
+            request.City = vehicleDetails.City;
+            request.Color = vehicleDetails.Color;
+            request.LicensePlate = LicensePlateUtility.NormalizeLicensePlate(vehicleDetails.LicensePlate);
+            request.Model = vehicleDetails.Model;
+            request.Situation = vehicleDetails.Situation;
+            request.State = vehicleDetails.State;
+            request.Year = vehicleDetails.Year;
+            request.YearModel = vehicleDetails.YearModel;
+            request.OwnerId = request.Owner.Id;
 
-            this.OwnerRepository.CreateOrUpdateOwner(vehicle.Owner);
-            this.VehicleRepository.CreateOrUpdateVehicle(vehicle);
+            this.OwnerRepository.CreateOrUpdateOwner(request.Owner);
+            this.VehicleRepository.CreateOrUpdateVehicle(request);
 
             response.IsSuccess = true;
-            response.StatusCode = HttpStatusCode.Created;
-            response.SuccessBody = vehicle;
+            response.StatusCode = HttpStatusCode.OK;
+            response.SuccessBody = request;
 
             return response;
         }
 
-        public BaseResponse<object> GetVehicle(Vehicle vehicle)
+        public BaseResponse<object> GetVehicle(Vehicle request)
         {
             BaseResponse<object> response = new BaseResponse<object>();
 
-            var vehicleResult = this.VehicleRepository.GetVehicle(LicensePlateUtility.NormalizeLicensePlate(vehicle.LicensePlate));
+            var vehicleResult = this.VehicleRepository.GetVehicle(LicensePlateUtility.NormalizeLicensePlate(request.LicensePlate));
 
             if (vehicleResult == null)
             {
                 response.IsSuccess = false;
                 response.StatusCode = HttpStatusCode.NotFound;
-            }
-            else
-            {
-                vehicleResult.Owner = this.OwnerRepository.GetOwner(vehicleResult.OwnerId);
-                response.IsSuccess = true;
-                response.SuccessBody = vehicleResult;
-                response.StatusCode = HttpStatusCode.OK;
+                return response;
             }
 
+            vehicleResult.Owner = this.OwnerRepository.GetOwner(vehicleResult.OwnerId);
+
+            var ownerNotification = this.OwnerNotificationRepository.GetOwnerNotification(vehicleResult.OwnerId);
+            if (ownerNotification != null && ownerNotification.OneSignalIds.Count > 0 && request.Owner.Id != vehicleResult.OwnerId)
+            {
+                this.OwnerNotificationExternal.SendPushNotification(vehicleResult, ownerNotification, request.Owner);
+            }
+
+            
+            response.IsSuccess = true;
+            response.SuccessBody = vehicleResult;
+            response.StatusCode = HttpStatusCode.OK;
+        
             return response;
         }
 

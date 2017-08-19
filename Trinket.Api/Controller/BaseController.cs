@@ -9,9 +9,12 @@ namespace Trinket.Api.Controller
         public BaseController()
         {
             this.VehicleManager = new VehicleManager();
+            this.OwnerNotificationManager = new OwnerNotificationManager();
         }
 
         public VehicleManager VehicleManager { get; set; }
+
+        public OwnerNotificationManager OwnerNotificationManager { get; set; }
 
         public object CreateResponse(BaseResponse<object> response)
         {
