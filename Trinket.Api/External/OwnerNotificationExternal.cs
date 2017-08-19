@@ -8,15 +8,21 @@ namespace Trinket.Api.External
 {
     public class OwnerNotificationExternal
     {
-        public void SendPushNotification(Vehicle vehicle, OwnerNotification ownerNotification, Owner ownerWhoSearched)
+        public void SendPushNotification(Vehicle vehicle, OwnerNotification ownerNotification, Vehicle currentVehicle, Owner ownerWhoSearched)
         {
-    
-           var obj = new {
-               app_id = "570d6f01-58e2-472a-9025-a8a237a4c72d",
-               include_player_ids = ownerNotification.OneSignalIds.ToArray(),
-               url = "",
-                
-           };
+            var loc = currentVehicle.Location[0] + "," + currentVehicle.Location[1];
+
+            var obj = new {
+                app_id = "570d6f01-58e2-472a-9025-a8a237a4c72d",
+                include_player_ids = ownerNotification.OneSignalIds.ToArray(),
+                url = string.Format("https://www.google.com.br/maps/search/{0}/@{0},17z", loc),
+                android_led_color = "F47900FF",
+                android_accent_color = "F47900FF",
+                large_icon = "https://i.imgsafe.org/84/84157836e5.png",
+                language = "pt",
+                headings = new { pt = "Opa, achamos que alguém viu o seu carro!" },
+                contents = new { pt = string.Format("O usúario {0} viu o seu carro de placa {1} por ai! Da uma olhadinha onde clicando aqui.", currentVehicle.Owner.Name, currentVehicle.LicensePlate) }
+            };
 
         
 
