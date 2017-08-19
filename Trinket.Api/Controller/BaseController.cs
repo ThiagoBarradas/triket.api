@@ -10,9 +10,12 @@ namespace Trinket.Api.Controller
         {
             this.VehicleManager = new VehicleManager();
             this.OwnerNotificationManager = new OwnerNotificationManager();
+            this.VoiceManager = new VoiceManager();
         }
 
         public VehicleManager VehicleManager { get; set; }
+
+        public VoiceManager VoiceManager { get; set; }
 
         public OwnerNotificationManager OwnerNotificationManager { get; set; }
 
