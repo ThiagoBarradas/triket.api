@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ssh", "ssh", "{68A87A86-023
 		ssh\hubapps.pem = ssh\hubapps.pem
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiAiSDK.NETCore", "ApiAiSDK.NETCore\ApiAiSDK.NETCore.csproj", "{5BDD3C09-A1AF-43B6-BE91-FAE13C445737}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiAiSDK", "ApiAiSDK\ApiAiSDK.csproj", "{162D1664-491D-41A3-B4E7-332EAAF87CCA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +32,14 @@ Global
 		{5D5F827A-B87F-4331-8AA9-5BC9B72DE33B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D5F827A-B87F-4331-8AA9-5BC9B72DE33B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D5F827A-B87F-4331-8AA9-5BC9B72DE33B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BDD3C09-A1AF-43B6-BE91-FAE13C445737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BDD3C09-A1AF-43B6-BE91-FAE13C445737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BDD3C09-A1AF-43B6-BE91-FAE13C445737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BDD3C09-A1AF-43B6-BE91-FAE13C445737}.Release|Any CPU.Build.0 = Release|Any CPU
+		{162D1664-491D-41A3-B4E7-332EAAF87CCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162D1664-491D-41A3-B4E7-332EAAF87CCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162D1664-491D-41A3-B4E7-332EAAF87CCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162D1664-491D-41A3-B4E7-332EAAF87CCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,6 +7,7 @@ namespace Trinket.Api.Controller
         public HomeController()
         {
             this.Get("", args => this.Home());
+            this.Get("test", args => this.Test());
         }
 
         public object Home()
@@ -30,6 +31,21 @@ namespace Trinket.Api.Controller
             #endregion
 
             return Response.AsText(text);
+        }
+
+        public object Test()
+        {
+            var config = new ApiAiSDK.AIConfiguration("b482bc38b215444494744d9c45c2a1f1", ApiAiSDK.SupportedLanguage.PortugueseBrazil);
+            var client = new ApiAiSDK.NETCore.ApiAi(config);
+            var request = new ApiAiSDK.Model.AIRequest("palmito kwm1183 Rio de Janeiro");
+
+
+            var task = client.TextRequestAsync(request);
+            while (task.IsCompleted == false) { }
+
+            var result = task.Result;
+
+            return Response.AsJson(result);
         }
     }
 }

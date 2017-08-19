@@ -17,4 +17,7 @@
     <PackageReference Include="NEST" Version="6.0.0-alpha1" />
     <PackageReference Include="RestSharp.NetCore" Version="105.2.4-rc4-24214-01" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApiAiSDK.NETCore\ApiAiSDK.NETCore.csproj" />
+  </ItemGroup>
 </Project>
