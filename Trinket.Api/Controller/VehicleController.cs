@@ -8,9 +8,9 @@ namespace Trinket.Api.Controller
     {
         public VehicleController()
         {
-            this.Post("vehicles", args => this.CreateOrUpdate());
-            this.Get("vehicles", args => this.Search());
-            this.Get("vehicles/{licensePlate}", args => this.Get());
+            this.Post("vehicles/register", args => this.CreateOrUpdate());
+            this.Get("vehicles/search", args => this.Search());
+            this.Post("vehicles/get", args => this.Get());
         }
 
         public object CreateOrUpdate()

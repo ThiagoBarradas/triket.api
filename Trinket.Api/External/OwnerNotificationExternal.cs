@@ -10,7 +10,7 @@ namespace Trinket.Api.External
     {
         public void SendPushNotification(Vehicle vehicle, OwnerNotification ownerNotification, Vehicle currentVehicle, Owner ownerWhoSearched)
         {
-            var loc = currentVehicle.Location[0] + "," + currentVehicle.Location[1];
+            var loc = currentVehicle.Location[0].ToString().Replace(",",".") + "," + currentVehicle.Location[1].ToString().Replace(",", ".");
 
             var obj = new {
                 app_id = "570d6f01-58e2-472a-9025-a8a237a4c72d",
@@ -19,34 +19,23 @@ namespace Trinket.Api.External
                 android_led_color = "F47900FF",
                 android_accent_color = "F47900FF",
                 large_icon = "https://i.imgsafe.org/84/84157836e5.png",
-                language = "pt",
-                headings = new { pt = "Opa, achamos que alguém viu o seu carro!" },
-                contents = new { pt = string.Format("O usúario {0} viu o seu carro de placa {1} por ai! Da uma olhadinha onde clicando aqui.", currentVehicle.Owner.Name, currentVehicle.LicensePlate) }
+                language = "en",
+                headings = new { en = "Opa, achamos que alguém viu o seu carro!" },
+                contents = new { en = string.Format("O usúario {0} viu o seu carro de placa {1} por ai! Da uma olhadinha onde clicando aqui.", currentVehicle.Owner.Name, currentVehicle.LicensePlate) },
+                big_picture = string.Format("https://maps.googleapis.com/maps/api/staticmap?size=600x300&zoom=15&center={0}&markers=color:red%7Clabel:Trinket%7C{0}&format=png&style=feature:transit.line%7Cvisibility:simplified%7Ccolor:0xbababa&style=feature:road.highway%7Celement:labels.text.fill%7Cvisibility:on%7Ccolor:0xffffff&key=AIzaSyDNP8SVFrTICqLly8FZTw6oMphZjs9QgW4", loc)
             };
-
-        
-
-//            {
-//                "app_id": "5eb5a37e-b458-11e3-ac11-000c2940e62c",
-//  "include_player_ids": ["6392d91a-b206-4b7b-a620-cd68e32c3a76","76ece62b-bcfe-468c-8a78-839aeaa8c5fa","8e0f21fa-9a5a-4ae7-a9a6-ca1f24294b86"],
-//  "data": {"foo": "bar"},
-//  "contents": {"en": "English Message"}
-//}
-
 
             RestClient client = new RestClient("https://onesignal.com/api/v1/notifications");
             RestRequest request = new RestRequest(Method.POST);
             request.AddHeader("Authorization", "Basic NGNjZTY3N2EtNDE4ZC00YWFlLTlhMjUtODBhMzc0MTA3NjBi");
             request.AddJsonBody(obj);
 
-            var response = client.Execute<VehicleDetailsExternal>(request);
+            var response = client.Execute(request);
 
             if (response.ErrorException != null)
             {
                 throw response.ErrorException;
             }
-
-            //return response.Data;
         }
     }
 }

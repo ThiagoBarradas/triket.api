@@ -57,7 +57,7 @@ namespace Trinket.Api.Manager
             vehicleResult.Owner = this.OwnerRepository.GetOwner(vehicleResult.OwnerId);
 
             var ownerNotification = this.OwnerNotificationRepository.GetOwnerNotification(vehicleResult.OwnerId);
-            if (ownerNotification != null && ownerNotification.OneSignalIds.Count > 0 && request.Owner.Id != vehicleResult.OwnerId)
+            if (ownerNotification != null && ownerNotification.OneSignalIds.Count > 0 && request.Owner.Id != vehicleResult.OwnerId && vehicleResult.IsStolen == true)
             {
                 this.OwnerNotificationExternal.SendPushNotification(vehicleResult, ownerNotification, request, request.Owner);
             }
