@@ -6,7 +6,7 @@ namespace Triket.Api.Controller
     {
         public HomeController()
         {
-            this.RegisterRoutes();
+            this.Get("", args => this.Home());
         }
 
         public object Home()
@@ -30,11 +30,6 @@ namespace Triket.Api.Controller
             #endregion
 
             return Response.AsText(text);
-        }
-
-        private void RegisterRoutes()
-        {
-            this.Get("", args => this.Home());
         }
     }
 }
