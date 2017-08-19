@@ -24,8 +24,8 @@ namespace Trinket.Api.Models
 
         public Owner Owner { get; set; }
 
-        public string Situation { get; internal set; }
+        public string Situation { get; set; }
 
-        public string State { get; internal set; }
+        public string State { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace Trinket.Api.Controller
         {
             this.Post("vehicles", args => this.CreateOrUpdate());
             this.Get("vehicles", args => this.Search());
+            this.Get("vehicles/{licensePlate}", args => this.Get());
         }
 
         public object Search()
@@ -17,12 +18,21 @@ namespace Trinket.Api.Controller
             return Response.AsJson("");
         }
 
+
         public object CreateOrUpdate()
         {
             var request = this.Bind<Vehicle>();
             var response = this.VehicleManager.CreateOrUpdateVehicle(request);
 
-            return Response.AsJson(response);
+            return this.CreateResponse(response);
+        }
+
+        public object Get()
+        {
+            var request = this.Bind<Vehicle>();
+            var response = this.VehicleManager.Get(request);
+
+            return this.CreateResponse(response);
         }
     }
 }
