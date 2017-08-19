@@ -41,7 +41,7 @@ namespace Trinket.Api.Repository
             descriptor.Size(999);
             descriptor.From(0);
 
-            var container = QueryBuilder.CreateMatchQuery("owner.id", ownerId);
+            var container = QueryBuilder.CreateMatchQuery("ownerId", ownerId);
             descriptor.ApplyQuery(container);
 
             var result = this.ElasticClient.Search<Vehicle>(descriptor);

@@ -11,10 +11,13 @@ namespace Trinket.Api.Manager
         public BaseManager()
         {
             this.VehicleRepository = new VehicleRepository();
+            this.OwnerRepository = new OwnerRepository();
             this.VehicleExternal = new VehicleExternal();
         }
 
         public VehicleRepository VehicleRepository { get; set; }
+
+        public OwnerRepository OwnerRepository { get; set; }
 
         public VehicleExternal VehicleExternal { get; set; }
     }

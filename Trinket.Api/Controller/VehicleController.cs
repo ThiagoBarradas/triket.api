@@ -13,12 +13,6 @@ namespace Trinket.Api.Controller
             this.Get("vehicles/{licensePlate}", args => this.Get());
         }
 
-        public object Search()
-        { 
-            return Response.AsJson("");
-        }
-
-
         public object CreateOrUpdate()
         {
             var request = this.Bind<Vehicle>();
@@ -30,7 +24,15 @@ namespace Trinket.Api.Controller
         public object Get()
         {
             var request = this.Bind<Vehicle>();
-            var response = this.VehicleManager.Get(request);
+            var response = this.VehicleManager.GetVehicle(request);
+
+            return this.CreateResponse(response);
+        }
+
+        public object Search()
+        {
+            var request = this.Bind<SearchVehicleRequest>();
+            var response = this.VehicleManager.SearchVehicle(request);
 
             return this.CreateResponse(response);
         }

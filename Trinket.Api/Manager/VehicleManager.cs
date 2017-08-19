@@ -1,6 +1,7 @@
 ﻿using Nancy;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Trinket.Api.Models;
 using Trinket.Api.Utilities;
@@ -31,7 +32,9 @@ namespace Trinket.Api.Manager
             vehicle.State = vehicleDetails.State;
             vehicle.Year = vehicleDetails.Year;
             vehicle.YearModel = vehicleDetails.YearModel;
+            vehicle.OwnerId = vehicle.Owner.Id;
 
+            this.OwnerRepository.CreateOrUpdateOwner(vehicle.Owner);
             this.VehicleRepository.CreateOrUpdateVehicle(vehicle);
 
             response.IsSuccess = true;
@@ -41,7 +44,7 @@ namespace Trinket.Api.Manager
             return response;
         }
 
-        public BaseResponse<object> Get(Vehicle vehicle)
+        public BaseResponse<object> GetVehicle(Vehicle vehicle)
         {
             BaseResponse<object> response = new BaseResponse<object>();
 
@@ -54,11 +57,32 @@ namespace Trinket.Api.Manager
             }
             else
             {
+                vehicleResult.Owner = this.OwnerRepository.GetOwner(vehicleResult.OwnerId);
                 response.IsSuccess = true;
                 response.SuccessBody = vehicleResult;
                 response.StatusCode = HttpStatusCode.OK;
             }
 
+            return response;
+        }
+
+        public BaseResponse<object> SearchVehicle(SearchVehicleRequest request)
+        {
+            BaseResponse<object> response = new BaseResponse<object>();
+
+            var vehiclesResult = this.VehicleRepository.SearchVehicles(request.OwnerId);
+            var ownerId = vehiclesResult.Items.FirstOrDefault()?.OwnerId;
+
+            if (string.IsNullOrWhiteSpace(ownerId) == false)
+            {
+                var owner = this.OwnerRepository.GetOwner(ownerId);
+                vehiclesResult.Items.ForEach(r => { r.Owner = owner; });
+            }
+
+            response.IsSuccess = true;
+            response.SuccessBody = vehiclesResult;
+            response.StatusCode = HttpStatusCode.OK;
+        
             return response;
         }
     }
