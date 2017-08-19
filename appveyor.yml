@@ -8,7 +8,7 @@ configuration:
 - Release
 
 before_build:
-- dotnet restore
+- dotnet restore Trinket.Api.sln
 
 build:
   project: Trinket.Api.sln
