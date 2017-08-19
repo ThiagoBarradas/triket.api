@@ -11,6 +11,7 @@ namespace Trinket.Api
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
+                .UseUrls("http://*:5002")
                 .Build();
 
             host.Run();
