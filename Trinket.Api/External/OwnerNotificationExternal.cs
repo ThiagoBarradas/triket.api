@@ -46,7 +46,7 @@ namespace Trinket.Api.External
                 throw response.ErrorException;
             }
 
-            return response.Data;
+            //return response.Data;
         }
     }
 }
