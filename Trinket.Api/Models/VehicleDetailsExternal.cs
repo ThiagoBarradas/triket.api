@@ -5,31 +5,31 @@ namespace Trinket.Api.Models
 {
     public class VehicleDetailsExternal
     {
-        [SerializeAs(Name = "placa")]
+        [DeserializeAs(Name = "placa")]
         public string LicensePlate { get; set; }
 
-        [SerializeAs(Name = "modelo")]
+        [DeserializeAs(Name = "modelo")]
         public string Model { get; set; }
 
-        [SerializeAs(Name = "marca")]
+        [DeserializeAs(Name = "marca")]
         public string Brand { get; set; }
 
-        [SerializeAs(Name = "ano")]
+        [DeserializeAs(Name = "ano")]
         public string Year { get; set; }
 
-        [SerializeAs(Name = "anoModelo")]
+        [DeserializeAs(Name = "anoModelo")]
         public string YearModel { get; set; }
 
-        [SerializeAs(Name = "cor")]
+        [DeserializeAs(Name = "cor")]
         public string Color { get; set; }
 
-        [SerializeAs(Name = "situacao")]
+        [DeserializeAs(Name = "situacao")]
         public string Situation { get; set; }
 
-        [SerializeAs(Name = "municipio")]
+        [DeserializeAs(Name = "municipio")]
         public string City { get; set; }
 
-        [SerializeAs(Name = "uf")]
+        [DeserializeAs(Name = "uf")]
         public string State { get; set; }
     }
 }

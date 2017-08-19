@@ -2,9 +2,9 @@
 using Nancy.ModelBinding;
 using Trinket.Api.Models;
 
-namespace Triket.Api.Controller
+namespace Trinket.Api.Controller
 {
-    public class VehicleController : NancyModule
+    public class VehicleController : BaseController
     {
         public VehicleController()
         {
@@ -20,7 +20,7 @@ namespace Triket.Api.Controller
         public object CreateOrUpdate()
         {
             var request = this.Bind<Vehicle>();
-            var response = new { vehicle = request };
+            var response = this.VehicleManager.CreateOrUpdateVehicle(request);
 
             return Response.AsJson(response);
         }

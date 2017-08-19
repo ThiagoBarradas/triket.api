@@ -1,8 +1,8 @@
 ﻿using Nancy;
 
-namespace Triket.Api.Controller
+namespace Trinket.Api.Controller
 {
-    public class HomeController : NancyModule
+    public class HomeController : BaseController
     {
         public HomeController()
         {
