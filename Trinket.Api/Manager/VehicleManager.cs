@@ -62,7 +62,6 @@ namespace Trinket.Api.Manager
                 this.OwnerNotificationExternal.SendPushNotification(vehicleResult, ownerNotification, request, request.Owner);
             }
 
-            
             response.IsSuccess = true;
             response.SuccessBody = vehicleResult;
             response.StatusCode = HttpStatusCode.OK;
