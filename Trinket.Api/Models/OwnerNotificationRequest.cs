@@ -4,7 +4,7 @@ namespace Trinket.Api.Models
 {
     public class OwnerNotificationRequest
     {
-        public string OwnerId { get; set; }
+        public Owner Owner { get; set; }
 
         public string OneSignalId { get; set; }
     }

@@ -14,14 +14,15 @@ namespace Trinket.Api.Manager
         {
             BaseResponse<object> response = new BaseResponse<object>();
 
-            var ownerNotification = this.OwnerNotificationRepository.GetOwnerNotification(ownerNotificationRequest.OwnerId);
+            var ownerNotification = this.OwnerNotificationRepository.GetOwnerNotification(ownerNotificationRequest.Owner.Id);
             if (ownerNotification == null) ownerNotification = new OwnerNotification();
 
-            ownerNotification.OwnerId = ownerNotificationRequest.OwnerId;
+            ownerNotification.OwnerId = ownerNotificationRequest.Owner.Id;
             ownerNotification.OneSignalIds.Add(ownerNotificationRequest.OneSignalId);
             ownerNotification.OneSignalIds = ownerNotification.OneSignalIds.Distinct().ToList();
 
             this.OwnerNotificationRepository.CreateOrUpdateOwnerNotification(ownerNotification);
+            this.OwnerRepository.CreateOrUpdateOwner(ownerNotificationRequest.Owner);
 
             response.IsSuccess = true;
             response.StatusCode = HttpStatusCode.OK;
